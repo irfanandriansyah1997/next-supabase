@@ -11,7 +11,7 @@ module.exports = {
   ],
   moduleNameMapper: {
     '^.+\\.module\\.(css)$': 'identity-obj-proxy',
-    '^@/(.*)$': '<rootDir>/$1'
+    '^@/(.*)$': '<rootDir>/src/$1'
   },
   modulePathIgnorePatterns: ['<rootDir>/cypress/'],
   rootDir: path.join(__dirname, '../..'),
