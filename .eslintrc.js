@@ -27,9 +27,11 @@ module.exports = {
     'import/no-dynamic-require': 0,
     'import/order': 0,
     'import/prefer-default-export': 0,
+    'jsdoc/no-undefined-types': 0,
     'jsdoc/require-example': 0,
     'no-multiple-empty-lines': [2, { max: 1, maxBOF: 0, maxEOF: 0 }],
     'no-shadow': 0,
+    'no-unused-vars': 2,
     quotes: 0,
     semi: [2, 'always'],
     'simple-import-sort/imports': [
