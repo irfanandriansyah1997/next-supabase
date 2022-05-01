@@ -8,7 +8,7 @@ ERRORS_BUFFER=""
 FILE_PATTERN="\.(js|es6|jsx|tsx|ts|scss|css)$"
 
 ESLINT_CONFIG=$ROOT_DIR/.eslintrc.js
-ESLINT_IGNORE_CONFIG=$ROOT_DIR/.eslintignore
+ESLINT_IGNORE_CONFIG=$ROOT_DIR/.gitignore
 ESLINT_BIN=$ROOT_DIR/node_modules/.bin/eslint
 
 
