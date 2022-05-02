@@ -1,5 +1,6 @@
-import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
 import { useUser } from '@supabase/supabase-auth-helpers/react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 import LoginForm from './form';
 
@@ -11,7 +12,19 @@ import LoginForm from './form';
  * @returns {JSX.Element} rendered react component
  */
 const LoginPageContainer = () => {
-  const { error, user } = useUser();
+  const { error, isLoading, user } = useUser();
+  const { push } = useRouter();
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (user) {
+        push('/');
+        return;
+      }
+    }
+  }, [isLoading, push, user]);
+
+  if (isLoading) return <p>Loading...</p>;
 
   if (!user)
     return (
@@ -21,14 +34,7 @@ const LoginPageContainer = () => {
       </>
     );
 
-  return (
-    <>
-      <button onClick={() => supabaseClient.auth.signOut()}>Sign out</button>
-      <p>user:</p>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-      <p>client-side data fetching with RLS</p>
-    </>
-  );
+  return null;
 };
 
 export default LoginPageContainer;

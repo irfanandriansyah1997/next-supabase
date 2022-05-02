@@ -22,6 +22,7 @@ const LoginForm = () => {
       <Auth
         supabaseClient={supabaseClient}
         providers={['github']}
+        redirectTo="/"
         socialColors
         onlyThirdPartyProviders
         view="sign_in"
