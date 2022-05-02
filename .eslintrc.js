@@ -5,9 +5,12 @@ module.exports = {
     'import',
     'simple-import-sort',
     'sort-destructure-keys',
-    'sort-keys-fix'
+    'sort-keys-fix',
+    '@emotion',
+    'typescript-sort-keys'
   ],
   rules: {
+    '@emotion/pkg-renaming': 2,
     '@typescript-eslint/ban-types': [0],
     camelcase: 0,
     'class-methods-use-this': 0,
@@ -61,6 +64,8 @@ module.exports = {
       }
     ],
     'sort-imports': 0,
-    'sort-keys-fix/sort-keys-fix': 2
+    'sort-keys-fix/sort-keys-fix': 2,
+    'typescript-sort-keys/interface': 'error',
+    'typescript-sort-keys/string-enum': 'error'
   }
 };
