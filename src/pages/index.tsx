@@ -1,12 +1,18 @@
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
-import withAuthenticatedPageWrapper from '@/hoc/authenticated-page';
+const MainPage: NextPage = () => {
+  const { replace } = useRouter();
 
-const Home: NextPage = () => {
-  return <div>Notes Page</div>;
+  useEffect(() => {
+    replace('/account');
+  }, [replace]);
+
+  return null;
 };
 
 export const getServerSideProps = withAuthRequired({ redirectTo: '/login' });
 
-export default withAuthenticatedPageWrapper(Home);
+export default MainPage;

@@ -17,4 +17,8 @@ export const styApps = css`
   padding-left: 75px;
   position: relative;
   width: 90%;
+
+  .apps-content {
+    flex: 1;
+  }
 `;

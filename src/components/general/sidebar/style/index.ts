@@ -11,7 +11,7 @@ export const stySidebar = css`
   flex-direction: column;
   height: 100%;
   left: 0;
-  padding: 16px 0;
+  padding: 12px 0;
   position: absolute;
   top: 0;
   width: 75px;
@@ -34,10 +34,12 @@ export const stySidebar = css`
 `;
 
 export const stySidebarLogo = css`
-  width: 50px;
-  height: 50px;
+  width: 32px;
+  height: 32px;
   background-color: ${COLOR_PALLETE.primary};
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
 `;
 

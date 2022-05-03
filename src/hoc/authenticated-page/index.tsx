@@ -1,8 +1,14 @@
+import type { User } from '@supabase/supabase-js';
 import { FC } from 'react';
 
+import Header from '@/components/general/header';
 import Sidebar from '@/components/general/sidebar';
 
 import { styApps } from './style';
+
+interface WrappedComponentProps {
+  user: User;
+}
 
 /**
  * With Authenticated Page
@@ -13,11 +19,17 @@ import { styApps } from './style';
  * @returns {FC} wrapped component
  */
 const withAuthenticatedPageWrapper = (Component: FC) => {
-  const WrappedComponent = (props: any) => {
+  const WrappedComponent = (props: WrappedComponentProps) => {
+    const { user } = props;
+    console.debug(user);
+
     return (
       <div className={styApps}>
         <Sidebar />
-        <Component {...props} />
+        <div className="apps-content">
+          <Header />
+          <Component {...(props as any)} />
+        </div>
       </div>
     );
   };

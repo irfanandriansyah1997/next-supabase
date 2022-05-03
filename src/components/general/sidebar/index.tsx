@@ -4,7 +4,10 @@ import { ComponentProps } from 'react';
 
 import Icon from '@/components/general/icon';
 import Link from '@/components/general/link';
-import { MEDIUM_FONT_SIZE } from '@/styles/constant/typography';
+import {
+  LARGE_FONT_SIZE,
+  MEDIUM_FONT_SIZE
+} from '@/styles/constant/typography';
 
 import Text from '../text';
 import { stySidebar, stySidebarItem, stySidebarLogo } from './style';
@@ -43,13 +46,15 @@ const SidebarItem = (props: SidebarItemProps) => {
  */
 const Sidebar = () => (
   <div className={stySidebar}>
-    <div className={cx(stySidebarLogo)} />
+    <div className={cx(stySidebarLogo)}>
+      <Icon icon="check_circle" size={LARGE_FONT_SIZE} color="white" />
+    </div>
     <ul>
       <li>
-        <SidebarItem href="/" icon="event_note" />
+        <SidebarItem href="/account" icon="event_note" />
       </li>
       <li>
-        <SidebarItem href="/user-profile" icon="account_circle" />
+        <SidebarItem href="/account/user-profile" icon="account_circle" />
       </li>
     </ul>
     <Link href="/login/signout" className="sidebar-logout">
