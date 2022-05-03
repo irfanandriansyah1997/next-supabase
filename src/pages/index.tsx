@@ -1,10 +1,12 @@
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs';
 import type { NextPage } from 'next';
 
+import withAuthenticatedPageWrapper from '@/hoc/authenticated-page';
+
 const Home: NextPage = () => {
   return <div>Notes Page</div>;
 };
 
 export const getServerSideProps = withAuthRequired({ redirectTo: '/login' });
 
-export default Home;
+export default withAuthenticatedPageWrapper(Home);

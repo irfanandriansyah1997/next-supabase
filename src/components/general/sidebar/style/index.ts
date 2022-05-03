@@ -1,6 +1,8 @@
 import { css } from '@emotion/css';
 
 import { COLOR_PALLETE } from '@/styles/constant/color';
+import { SPACING_LEVEL_4, SPACING_LEVEL_7 } from '@/styles/constant/spacing';
+import { EASE_IN_OUT } from '@/styles/constant/transition';
 
 export const stySidebar = css`
   align-items: center;
@@ -17,14 +19,14 @@ export const stySidebar = css`
   > ul {
     list-style: none;
     width: 100%;
-    margin-top: 32px;
+    margin-top: ${SPACING_LEVEL_7};
   }
 
   .sidebar-logout {
     align-items: center;
     bottom: 0;
     display: flex;
-    height: 75px;
+    height: 60px;
     justify-content: center;
     position: absolute;
     width: 100%;
@@ -48,7 +50,8 @@ export const stySidebarItem = css`
   position: relative;
   text-align: center;
   width: 100%;
-  margin: 12px 0;
+  margin: ${SPACING_LEVEL_4} 0;
+  transition: all ${EASE_IN_OUT} 0.3s;
 
   &::before {
     background-color: ${COLOR_PALLETE.title};
@@ -57,6 +60,7 @@ export const stySidebarItem = css`
     opacity: 0;
     position: absolute;
     right: 0;
+    transition: all ${EASE_IN_OUT} 0.3s;
     width: 3px;
   }
 

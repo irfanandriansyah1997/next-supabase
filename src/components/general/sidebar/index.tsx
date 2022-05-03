@@ -6,6 +6,7 @@ import Icon from '@/components/general/icon';
 import Link from '@/components/general/link';
 import { MEDIUM_FONT_SIZE } from '@/styles/constant/typography';
 
+import Text from '../text';
 import { stySidebar, stySidebarItem, stySidebarLogo } from './style';
 
 interface SidebarItemProps extends ComponentProps<typeof NextLink> {
@@ -51,8 +52,10 @@ const Sidebar = () => (
         <SidebarItem href="/user-profile" icon="account_circle" />
       </li>
     </ul>
-    <Link href="/logout" className="sidebar-logout">
-      <span>Logout</span>
+    <Link href="/login/signout" className="sidebar-logout">
+      <Text tag="p" fontSize="text">
+        Logout
+      </Text>
     </Link>
   </div>
 );
