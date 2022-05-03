@@ -1,6 +1,5 @@
-import { css, injectGlobal } from '@emotion/css';
+import { injectGlobal } from '@emotion/css';
 
-import { BOX_SHADOW_12dp } from './constant/box-shadow';
 import { COLOR_PALLETE } from './constant/color';
 import { PRIMARY_FONT } from './constant/typography';
 
@@ -449,19 +448,4 @@ input[type="submit"] {
     color: #000;
     padding: 0.2em 0;
   }
-`;
-
-export const styApps = css`
-  align-items: flex-start;
-  background-color: ${COLOR_PALLETE.lightGray};
-  border-radius: 10px;
-  box-shadow: ${BOX_SHADOW_12dp};
-  display: flex;
-  margin: 60px auto;
-  min-height: calc(100vh - 120px);
-  min-width: 1000px;
-  overflow: hidden;
-  padding-left: 75px;
-  position: relative;
-  width: 90%;
 `;
