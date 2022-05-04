@@ -1,6 +1,9 @@
 const path = require('path');
 
 const nextConfig = {
+  images: {
+    domains: ['avatars.githubusercontent.com']
+  },
   reactStrictMode: true,
   webpack: (config) => {
     config.plugins = config.plugins || [];

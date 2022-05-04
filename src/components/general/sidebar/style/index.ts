@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 
 import { COLOR_PALLETE } from '@/styles/constant/color';
-import { SPACING_LEVEL_4, SPACING_LEVEL_7 } from '@/styles/constant/spacing';
+import { SPACING_LEVEL_4, SPACING_LEVEL_5 } from '@/styles/constant/spacing';
 import { EASE_IN_OUT } from '@/styles/constant/transition';
 
 export const stySidebar = css`
@@ -19,7 +19,7 @@ export const stySidebar = css`
   > ul {
     list-style: none;
     width: 100%;
-    margin-top: ${SPACING_LEVEL_7};
+    margin-top: ${SPACING_LEVEL_5};
   }
 
   .sidebar-logout {

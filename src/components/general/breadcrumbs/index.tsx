@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 
 import Icon from '@/components/general/icon';
 import Link from '@/components/general/link';
@@ -46,10 +46,6 @@ const Breadcrumbs = () => {
 
     return response;
   }, [router.asPath]);
-
-  useEffect(() => {
-    console.debug(breadcrumbItems);
-  }, [breadcrumbItems]);
 
   return (
     <div className={styBreadcrumb}>

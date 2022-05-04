@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import Header from '@/components/general/header';
 import Sidebar from '@/components/general/sidebar';
+import { normalizeUser } from '@/utils/suppabase/auth';
 
 import { styApps } from './style';
 
@@ -21,13 +22,13 @@ interface WrappedComponentProps {
 const withAuthenticatedPageWrapper = (Component: FC) => {
   const WrappedComponent = (props: WrappedComponentProps) => {
     const { user } = props;
-    console.debug(user);
+    const { avatar, name } = normalizeUser(user);
 
     return (
       <div className={styApps}>
         <Sidebar />
         <div className="apps-content">
-          <Header />
+          <Header avatar={avatar} name={name} />
           <Component {...(props as any)} />
         </div>
       </div>

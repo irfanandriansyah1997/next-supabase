@@ -13,6 +13,7 @@ export const styApps = css`
   margin: ${SPACING_LEVEL_9} auto;
   min-height: calc(100vh - 120px);
   min-width: 1000px;
+  max-width: 1200px;
   overflow: hidden;
   padding-left: 75px;
   position: relative;
@@ -20,5 +21,10 @@ export const styApps = css`
 
   .apps-content {
     flex: 1;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: calc(100% - 75px);
   }
 `;
