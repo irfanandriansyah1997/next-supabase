@@ -1,4 +1,5 @@
 import { cx } from '@emotion/css';
+import { HTMLAttributes } from 'react';
 
 import type { COLOR_PALLETE } from '@/styles/constant/color';
 import { TEXT_FONT_SIZE } from '@/styles/constant/typography';
@@ -14,7 +15,7 @@ import { styIcon } from './style';
  * @description for rest of icon example you can see the docs
  * https://fonts.google.com/icons?icon.style=Outlined
  */
-interface IconProps {
+interface IconProps extends HTMLAttributes<HTMLSpanElement> {
   className?: string;
   color?: LiteralUnion<keyof typeof COLOR_PALLETE, string>;
   icon: string;
@@ -29,10 +30,11 @@ interface IconProps {
  * @returns {JSX.Element} rendered icon component
  */
 const Icon = (props: IconProps) => {
-  const { className, color, icon, size = TEXT_FONT_SIZE } = props;
+  const { className, color, icon, size = TEXT_FONT_SIZE, ...res } = props;
 
   return (
     <span
+      {...res}
       className={cx(
         'material-symbols-outlined',
         styIcon({

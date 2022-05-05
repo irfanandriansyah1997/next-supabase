@@ -2,9 +2,9 @@ import { hexToRgba } from '@/utils/general/color';
 
 import { COLOR_PALLETE } from './color';
 
-const colorPallete1 = hexToRgba(COLOR_PALLETE.black, 0.01);
-const colorPallete2 = hexToRgba(COLOR_PALLETE.black, 0.02);
-const colorPallete3 = hexToRgba(COLOR_PALLETE.black, 0.02);
+const colorPallete1 = hexToRgba(COLOR_PALLETE.black, 0.02);
+const colorPallete2 = hexToRgba(COLOR_PALLETE.black, 0.04);
+const colorPallete3 = hexToRgba(COLOR_PALLETE.black, 0.04);
 
 /* Shadow 1dp */
 export const BOX_SHADOW_1dp = `0 1px 1px 0 ${colorPallete1}, 0 2px 1px -1px ${colorPallete2}, 0 1px 3px 0 ${colorPallete3}`;

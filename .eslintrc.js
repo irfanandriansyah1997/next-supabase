@@ -1,5 +1,10 @@
 module.exports = {
-  extends: ['next/core-web-vitals', 'prettier', 'plugin:jsdoc/recommended'],
+  extends: [
+    'next/core-web-vitals',
+    'prettier',
+    'plugin:jsdoc/recommended',
+    'plugin:jsx-a11y/recommended'
+  ],
   plugins: [
     'jsdoc',
     'import',
@@ -7,11 +12,14 @@ module.exports = {
     'sort-destructure-keys',
     'sort-keys-fix',
     '@emotion',
-    'typescript-sort-keys'
+    'typescript-sort-keys',
+    'jsx-a11y',
+    '@typescript-eslint'
   ],
   rules: {
     '@emotion/pkg-renaming': 2,
     '@typescript-eslint/ban-types': [0],
+    '@typescript-eslint/no-unused-vars': [2],
     camelcase: 0,
     'class-methods-use-this': 0,
     'comma-dangle': ['error', 'never'],
@@ -34,7 +42,7 @@ module.exports = {
     'jsdoc/require-example': 0,
     'no-multiple-empty-lines': [2, { max: 1, maxBOF: 0, maxEOF: 0 }],
     'no-shadow': 0,
-    'no-unused-vars': 2,
+    'no-unused-vars': 0,
     quotes: 0,
     semi: [2, 'always'],
     'simple-import-sort/imports': [

@@ -10,6 +10,7 @@ import {
 } from '@/styles/constant/spacing';
 import { CAPTION_FONT_SIZE, LINE_HEIGHT_2 } from '@/styles/constant/typography';
 import { hexToRgba } from '@/utils/general/color';
+import { pxToRem } from '@/utils/general/style';
 
 export const styNotesCalendar = css`
   position: absolute;
@@ -30,7 +31,7 @@ export const styNotesCalendar = css`
   }
 `;
 
-export const styNotesCalendarItem = css`
+export const styNotesCalendarItem = (isActive = false) => css`
   width: 100%;
   cursor: pointer;
   display: flex;
@@ -42,6 +43,8 @@ export const styNotesCalendarItem = css`
     padding: 0 ${SPACING_LEVEL_4};
 
     h3 {
+      letter-spacing: ${pxToRem(-2)};
+
       &::before {
         content: '#';
         position: absolute;
@@ -65,14 +68,13 @@ export const styNotesCalendarItem = css`
     flex: 1;
     border-bottom: 1px solid ${hexToRgba(COLOR_PALLETE.gray, 0.5)};
 
+    ${isActive &&
+    css`
+      border-color: ${hexToRgba(COLOR_PALLETE.title, 0.5)};
+    `}
+
     > p {
       margin-top: ${SPACING_LEVEL_1};
-    }
-  }
-
-  &:last-child {
-    > section {
-      border: 0;
     }
   }
 `;

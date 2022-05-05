@@ -31,7 +31,8 @@ const Avatar = (props: AvatarProps) => {
       className={cx(
         className,
         styAvatar({
-          shape
+          shape,
+          size
         })
       )}
     />

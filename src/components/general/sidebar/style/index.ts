@@ -1,5 +1,6 @@
 import { css } from '@emotion/css';
 
+import { BOX_SHADOW_4dp } from '@/styles/constant/box-shadow';
 import { COLOR_PALLETE } from '@/styles/constant/color';
 import { SPACING_LEVEL_4, SPACING_LEVEL_5 } from '@/styles/constant/spacing';
 import { EASE_IN_OUT } from '@/styles/constant/transition';
@@ -15,6 +16,7 @@ export const stySidebar = css`
   position: absolute;
   top: 0;
   width: 75px;
+  box-shadow: ${BOX_SHADOW_4dp};
 
   > ul {
     list-style: none;
@@ -63,7 +65,7 @@ export const stySidebarItem = css`
     position: absolute;
     right: 0;
     transition: all ${EASE_IN_OUT} 0.3s;
-    width: 3px;
+    width: 2px;
   }
 
   &.sidebar-item--active,

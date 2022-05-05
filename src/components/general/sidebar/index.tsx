@@ -4,12 +4,12 @@ import { ComponentProps } from 'react';
 
 import Icon from '@/components/general/icon';
 import Link from '@/components/general/link';
+import Text from '@/components/general/text';
 import {
   LARGE_FONT_SIZE,
   MEDIUM_FONT_SIZE
 } from '@/styles/constant/typography';
 
-import Text from '../text';
 import { stySidebar, stySidebarItem, stySidebarLogo } from './style';
 
 interface SidebarItemProps extends ComponentProps<typeof NextLink> {
@@ -55,6 +55,9 @@ const Sidebar = () => (
       </li>
       <li>
         <SidebarItem href="/account/user-profile" icon="account_circle" />
+      </li>
+      <li>
+        <SidebarItem href="/account/summarize" icon="summarize" />
       </li>
     </ul>
     <Link href="/login/signout" className="sidebar-logout">

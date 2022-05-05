@@ -1,11 +1,14 @@
 import { css } from '@emotion/css';
 
+import { pxToRem } from '@/utils/general/style';
+
 interface StyAvatarArgs {
   shape: 'circle' | 'rounded' | 'rectangle';
+  size: number | string;
 }
 
 export const styAvatar = (props: StyAvatarArgs) => {
-  const { shape } = props;
+  const { shape, size } = props;
 
   let formattedBorderRadius = '0px';
 
@@ -24,6 +27,8 @@ export const styAvatar = (props: StyAvatarArgs) => {
   }
 
   return css`
+    width: ${typeof size === 'string' ? size : pxToRem(size)};
+    height: ${typeof size === 'string' ? size : pxToRem(size)};
     object-fit: cover;
     border-radius: ${formattedBorderRadius};
   `;
