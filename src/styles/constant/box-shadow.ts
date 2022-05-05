@@ -2,8 +2,8 @@ import { hexToRgba } from '@/utils/general/color';
 
 import { COLOR_PALLETE } from './color';
 
-const colorPallete1 = hexToRgba(COLOR_PALLETE.black, 0.01);
-const colorPallete2 = hexToRgba(COLOR_PALLETE.black, 0.02);
+const colorPallete1 = hexToRgba(COLOR_PALLETE.black, 0.02);
+const colorPallete2 = hexToRgba(COLOR_PALLETE.black, 0.04);
 const colorPallete3 = hexToRgba(COLOR_PALLETE.black, 0.04);
 
 /* Shadow 1dp */

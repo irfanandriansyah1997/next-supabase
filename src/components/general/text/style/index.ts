@@ -1,5 +1,6 @@
 import { css } from '@emotion/css';
 
+import type { BaseTextStylingProps } from '@/components/general/text/types';
 import { COLOR_PALLETE } from '@/styles/constant/color';
 import {
   CAPTION_FONT_SIZE,
@@ -23,8 +24,6 @@ import {
   TITLE_FONT_SIZE
 } from '@/styles/constant/typography';
 import { pxToRem } from '@/utils/general/style';
-
-import type { BaseTextStylingProps } from '../types';
 
 const FONT_SIZE_PRESET = {
   caption: CAPTION_FONT_SIZE,

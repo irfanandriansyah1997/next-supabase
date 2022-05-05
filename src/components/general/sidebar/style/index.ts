@@ -1,7 +1,8 @@
 import { css } from '@emotion/css';
 
+import { BOX_SHADOW_4dp } from '@/styles/constant/box-shadow';
 import { COLOR_PALLETE } from '@/styles/constant/color';
-import { SPACING_LEVEL_4, SPACING_LEVEL_7 } from '@/styles/constant/spacing';
+import { SPACING_LEVEL_4, SPACING_LEVEL_5 } from '@/styles/constant/spacing';
 import { EASE_IN_OUT } from '@/styles/constant/transition';
 
 export const stySidebar = css`
@@ -11,15 +12,16 @@ export const stySidebar = css`
   flex-direction: column;
   height: 100%;
   left: 0;
-  padding: 16px 0;
+  padding: 12px 0;
   position: absolute;
   top: 0;
   width: 75px;
+  box-shadow: ${BOX_SHADOW_4dp};
 
   > ul {
     list-style: none;
     width: 100%;
-    margin-top: ${SPACING_LEVEL_7};
+    margin-top: ${SPACING_LEVEL_5};
   }
 
   .sidebar-logout {
@@ -34,10 +36,12 @@ export const stySidebar = css`
 `;
 
 export const stySidebarLogo = css`
-  width: 50px;
-  height: 50px;
+  width: 32px;
+  height: 32px;
   background-color: ${COLOR_PALLETE.primary};
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
 `;
 
@@ -61,7 +65,7 @@ export const stySidebarItem = css`
     position: absolute;
     right: 0;
     transition: all ${EASE_IN_OUT} 0.3s;
-    width: 3px;
+    width: 2px;
   }
 
   &.sidebar-item--active,
