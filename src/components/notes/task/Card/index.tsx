@@ -9,6 +9,7 @@ import DropdownTask from '@/components/notes/task/Dropdown';
 import type { SimplyTaskEventHandler } from '@/components/notes/types';
 import { CATEGORY_ICON, CATEGORY_LABEL } from '@/constant/category';
 import { TodoStatusTaskEnum, TodoTaskType } from '@/types/notes';
+import { formattingTime } from '@/utils/general/date';
 
 import { styTaskCardItem } from './style';
 
@@ -102,6 +103,20 @@ const TaskCardItem = (props: TaskGridItemProps) => {
     }
   }, [status]);
 
+  const descTask = useMemo(() => {
+    let response = desc;
+
+    if (tags) {
+      response = `<b>[${tags}]</b> ${response}`;
+    }
+
+    return response;
+  }, [desc, tags]);
+
+  const rangeTime = useMemo(() => {
+    return `${formattingTime(start)} - ${formattingTime(end)}`;
+  }, [start, end]);
+
   return (
     <div className={styTaskCardItem(status)}>
       <div className="dropdown">
@@ -125,7 +140,6 @@ const TaskCardItem = (props: TaskGridItemProps) => {
           enableEdit={enableEdit}
         />
       </div>
-
       <div className="category">
         <Avatar
           shape="rectangle"
@@ -150,9 +164,10 @@ const TaskCardItem = (props: TaskGridItemProps) => {
         color="title"
         lineHeight="preset-7"
         className="desc-task"
-      >
-        {desc}
-      </Text>
+        dangerouslySetInnerHTML={{
+          __html: descTask
+        }}
+      />
       <section className="footer">
         <Text
           tag="span"
@@ -163,9 +178,7 @@ const TaskCardItem = (props: TaskGridItemProps) => {
         >
           {labelStatus}
         </Text>
-        <Badge className="badge">
-          {start} - {end}
-        </Badge>
+        <Badge className="badge">{rangeTime}</Badge>
       </section>
     </div>
   );

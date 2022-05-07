@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import Header from '@/components/general/header';
 import Sidebar from '@/components/general/sidebar';
-import { normalizeUser } from '@/utils/suppabase/auth';
+import { normalizeUser } from '@/utils/supabase/auth';
 
 import { styApps } from './style';
 
@@ -34,6 +34,7 @@ const withAuthenticatedPageWrapper = (Component: FC) => {
       </div>
     );
   };
+
   WrappedComponent.displayName = `withAuthenticatedPage(${
     Component.displayName || Component.name || 'Component'
   })`;

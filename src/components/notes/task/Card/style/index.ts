@@ -32,6 +32,12 @@ export const styTaskCardItem = (status: TodoStatusTaskEnum | undefined) => css`
     }
   `}
 
+  .desc-task {
+    b {
+      font-weight: 700;
+    }
+  }
+
   .category {
     display: flex;
     align-items: center;

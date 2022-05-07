@@ -31,7 +31,7 @@ interface NotesNavigationProps {
  * @since 0.0.0
  * @returns {JSX.Element} notes navigation html
  */
-const NotesNavigation = (props: NotesNavigationProps) => {
+let NotesNavigation = (props: NotesNavigationProps) => {
   const { active, id, setSelection, text } = props;
 
   /**
@@ -63,6 +63,7 @@ const NotesNavigation = (props: NotesNavigationProps) => {
 };
 
 interface NotesHeadingProps extends UIConfigType {
+  onClickCreateTask(): void;
   selectedDate: number;
   setUIConfig(param: Partial<UIConfigType>): void;
 }
@@ -76,7 +77,8 @@ interface NotesHeadingProps extends UIConfigType {
  * @returns {JSX.Element} notes heading html
  */
 const NotesHeading = (props: NotesHeadingProps) => {
-  const { selectedDate, selection, setUIConfig, template } = props;
+  const { onClickCreateTask, selectedDate, selection, setUIConfig, template } =
+    props;
   const currentDate = useRef(getCurrentTimestamp());
 
   /**
@@ -123,6 +125,10 @@ const NotesHeading = (props: NotesHeadingProps) => {
               color="title"
               lineHeight="preset-1"
               className="link"
+              tabIndex={0}
+              role="button"
+              aria-hidden="true"
+              onClick={onClickCreateTask}
             >
               New Task +
             </Text>

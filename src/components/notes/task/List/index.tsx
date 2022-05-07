@@ -9,6 +9,7 @@ import DropdownTask from '@/components/notes/task/Dropdown';
 import type { SimplyTaskEventHandler } from '@/components/notes/types';
 import { CATEGORY_ICON, CATEGORY_LABEL } from '@/constant/category';
 import { TodoStatusTaskEnum, TodoTaskType } from '@/types/notes';
+import { formattingTime } from '@/utils/general/date';
 
 import { styCheckbox, styTaskListItem } from './style';
 
@@ -115,6 +116,20 @@ const TaskListItem = (props: TaskListItemProps) => {
     }
   }, [on, payload, status]);
 
+  const descTask = useMemo(() => {
+    let response = desc;
+
+    if (tags) {
+      response = `<b>[${tags}]</b> ${response}`;
+    }
+
+    return response;
+  }, [desc, tags]);
+
+  const rangeTime = useMemo(() => {
+    return `${formattingTime(start)} - ${formattingTime(end)}`;
+  }, [start, end]);
+
   return (
     <div className={styTaskListItem(status)}>
       <div
@@ -147,14 +162,14 @@ const TaskListItem = (props: TaskListItemProps) => {
           fontSize={13}
           fontWeight={400}
           color="text"
+          className="desc-task"
           lineHeight="preset-6"
-        >
-          {desc}
-        </Text>
+          dangerouslySetInnerHTML={{
+            __html: descTask
+          }}
+        />
       </section>
-      <Badge className="badge">
-        {start} - {end}
-      </Badge>
+      <Badge className="badge">{rangeTime}</Badge>
       <DropdownTask
         handlerEditTask={onEditTask}
         handlerMarkAsDone={onMarkAsDone}

@@ -20,7 +20,7 @@ export type TaskEventKey =
   | 'mark-as-in-progress'
   | 'move-to-wont-do';
 
-type TaskEventHandlerPayload = {
+export type TaskEventHandlerPayload = {
   payload: TodoTaskType;
   type: TaskEventKey;
 };

@@ -1,31 +1,14 @@
 import { css } from '@emotion/css';
 
+import { fadeAnimaton } from '@/styles/constant/animation';
 import { BOX_SHADOW_24dp } from '@/styles/constant/box-shadow';
 import { COLOR_PALLETE } from '@/styles/constant/color';
+import { SPACING_LEVEL_3 } from '@/styles/constant/spacing';
 
 export const styDropdown = css`
   position: relative;
 
-  .fade-enter {
-    opacity: 0;
-  }
-
-  .fade-enter-active,
-  .fade-enter-done {
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 300ms, transform 300ms;
-  }
-
-  .fade-exit {
-    opacity: 1;
-  }
-
-  .fade-exit-active,
-  .fade-exit-done {
-    opacity: 0;
-    transition: opacity 300ms, transform 300ms;
-  }
+  ${fadeAnimaton}
 `;
 
 export const styDropdownContent = css`
@@ -33,7 +16,10 @@ export const styDropdownContent = css`
   display: block;
   background: ${COLOR_PALLETE.white};
   border-radius: 5px;
+  overflow: hidden;
   box-shadow: ${BOX_SHADOW_24dp};
   z-index: 1;
   width: max-content;
+  min-width: 100%;
+  top: calc(100% + ${SPACING_LEVEL_3});
 `;

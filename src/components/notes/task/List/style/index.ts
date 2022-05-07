@@ -54,6 +54,12 @@ export const styTaskListItem = (status: TodoStatusTaskEnum | undefined) => {
       `}
     }
 
+    .desc-task {
+      b {
+        font-weight: 700;
+      }
+    }
+
     .category {
       display: flex;
 
