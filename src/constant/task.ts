@@ -6,7 +6,7 @@ export let TASK_LIST: TodoTaskType[] = [
   {
     desc: 'Fix feedback pr review',
     end: '10:30',
-    id: '1',
+    id: 1,
     start: '10:00',
     status: TodoStatusTaskEnum.Done,
     tags: 'Atreus',
@@ -15,7 +15,7 @@ export let TASK_LIST: TodoTaskType[] = [
   {
     desc: 'Continue migrate cashless cashback page to ts',
     end: '14:00',
-    id: '2',
+    id: 2,
     start: '11:00',
     status: TodoStatusTaskEnum.Done,
     tags: 'Atlas',
@@ -24,7 +24,7 @@ export let TASK_LIST: TodoTaskType[] = [
   {
     desc: 'Fix wording on purchase-protection tnc page',
     end: '14:30',
-    id: '3',
+    id: 3,
     start: '14:00',
     status: TodoStatusTaskEnum.WontDo,
     tags: 'Artemis',
@@ -33,14 +33,14 @@ export let TASK_LIST: TodoTaskType[] = [
   {
     desc: 'Discussion Tracker & Monitoring',
     end: '9:30',
-    id: '4',
+    id: 4,
     start: '9:00',
     type: TodoCategoryEnum.Meeting
   },
   {
     desc: 'Weekly sprint planning',
     end: '10:00',
-    id: '5',
+    id: 5,
     start: '9:00',
     tags: 'Logistic',
     type: TodoCategoryEnum.FollowUp

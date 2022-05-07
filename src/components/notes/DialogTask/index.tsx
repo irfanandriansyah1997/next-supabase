@@ -40,6 +40,7 @@ const DialogTask = (props: DialogTaskProps) => {
   const {
     desc,
     end,
+    id,
     mode,
     onCloseDialog: onCloseDialogProps,
     onSubmit: onSubmitProps,
@@ -59,7 +60,7 @@ const DialogTask = (props: DialogTaskProps) => {
     initialValues: {
       desc: '',
       end: '09:00',
-      id: '',
+      id: undefined,
       start: '08:00',
       status: TodoStatusTaskEnum.All,
       tags: undefined,
@@ -84,11 +85,12 @@ const DialogTask = (props: DialogTaskProps) => {
   useEffect(() => {
     if (desc) setFieldValue('desc', desc);
     if (end) setFieldValue('end', end);
+    if (id) setFieldValue('id', id);
     if (start) setFieldValue('start', start);
     if (status) setFieldValue('status', status);
     if (tags) setFieldValue('tags', tags);
     if (type) setFieldValue('type', type);
-  }, [desc, end, setFieldValue, start, status, tags, type]);
+  }, [desc, end, id, setFieldValue, start, status, tags, type]);
 
   /**
    * On Change Task Type

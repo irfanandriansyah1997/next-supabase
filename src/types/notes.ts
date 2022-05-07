@@ -37,7 +37,7 @@ export interface TodoCategoryType {
 export interface TodoTaskType {
   desc: string;
   end: string;
-  id: string;
+  id?: number;
   start: string;
   status?: TodoStatusTaskEnum;
   tags?: string;
