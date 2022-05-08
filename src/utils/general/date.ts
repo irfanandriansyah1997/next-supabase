@@ -219,76 +219,15 @@ export const getWeeksInMonth = (
 };
 
 /**
- * Get Minutes From Time Text
+ * Is Day Off
  *
- * @param {string} time - time text with format hh:mm ex. 10:00
+ * @param {Date} date - selected date
  * @author Irfan Andriansyah <irfan.andriansyah@tokopedia.com>
- * @since 0.0.0
- * @returns {number} extracted minutes from time text
+ * @description check wheter selected day is day off
+ * @returns {boolean} is day off validator
  */
-export const getMinutesFromTimeText = (time: string): number => {
-  try {
-    const [hours, minutes] = time.split(':');
+export const isDayOff = (date: Date): boolean => {
+  if (date.getDay() === 0 || date.getDay() === 6) return true;
 
-    return parseInt(hours, 10) * 60 + parseInt(minutes, 10);
-  } catch {
-    return 0;
-  }
-};
-
-/**
- * Formatting Time Text
- *
- * @param {string} time - time text
- * @author Irfan Andriansyah <irfan.andriansyah@tokopedia.com>
- * @since 0.0.0
- * @returns {number} formatted time
- */
-export const formattingTime = (time: string): string => {
-  try {
-    let response: string = '';
-    const [hours, minutes] = time.split(':');
-    let intHours = parseInt(hours, 10);
-
-    if (intHours < 13) {
-      const selectedHours = `${intHours}`;
-      response =
-        selectedHours.length === 1 ? `0${selectedHours}` : `${selectedHours}`;
-    } else {
-      const selectedHours = `${intHours - 12}`;
-      response =
-        selectedHours.length === 1 ? `0${selectedHours}` : `${selectedHours}`;
-    }
-
-    const selectedMinutes = minutes.length === 1 ? `0${minutes}` : `${minutes}`;
-    response = `${response}:${selectedMinutes}`;
-
-    if (intHours < 12) response = `${response}am`;
-    else response = `${response}pm`;
-
-    return response;
-  } catch {
-    return '-';
-  }
-};
-
-/**
- * Get Current Hours
- *
- * @param {Maybe<number>} additionalHours - additional hours
- * @author Irfan Andriansyah <irfan.andriansyah@tokopedia.com>
- * @since 0.0.0
- * @returns {string} current hours
- */
-export const getCurrentHours = (
-  additionalHours: Maybe<number> = undefined
-): string => {
-  const today = new Date();
-
-  if (additionalHours !== undefined)
-    return `${
-      today.getUTCHours() + 7 + additionalHours
-    }:${today.getUTCMinutes()}`;
-
-  return `${today.getUTCHours() + 7}:${today.getUTCMinutes()}`;
+  return false;
 };
