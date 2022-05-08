@@ -1,4 +1,4 @@
-import { ComponentProps, PropsWithChildren } from 'react';
+import { ComponentProps, PropsWithChildren, ReactNode } from 'react';
 
 import Dropdown from '@/components/general/dropdown';
 import Icon from '@/components/general/icon';
@@ -14,7 +14,7 @@ interface DropdownListType {
 }
 
 interface DropdownListItemProps {
-  icon: string;
+  icon: ReactNode;
   onClick(): void;
 }
 
@@ -31,7 +31,11 @@ const DropdownListItem = (props: PropsWithChildren<DropdownListItemProps>) => {
 
   return (
     <li className={styDropdownListItem} aria-hidden="true" onClick={onClick}>
-      <Icon size={18} icon={icon} color="white" />
+      {typeof icon === 'string' ? (
+        <Icon size={18} icon={icon} color="white" />
+      ) : (
+        icon
+      )}
       <Text
         tag="p"
         fontSize="text"

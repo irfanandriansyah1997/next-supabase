@@ -22,6 +22,9 @@ export const styDropdownListItem = css`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: ${SPACING_LEVEL_3};
+  }
+
+  > p {
+    margin-left: ${SPACING_LEVEL_3};
   }
 `;

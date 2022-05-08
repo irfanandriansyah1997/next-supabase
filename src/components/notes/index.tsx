@@ -1,16 +1,25 @@
+import Head from 'next/head';
 import { useCallback, useMemo, useState } from 'react';
 
 import { CATEGORY_LIST } from '@/constant/category';
 import { TASK_LIST } from '@/constant/task';
-import { TodoCategoryEnum, UIConfigType } from '@/types/notes';
+import { TodoCategoryEnum, TodoTaskType, UIConfigType } from '@/types/notes';
 import { TodoStatusTaskEnum } from '@/types/notes';
 import { getCurrentTimestamp } from '@/utils/general/date';
 
 import NotesCalendar from './calendar';
 import NotesCategory from './category';
+import DayOffMessage from './day-off';
+import DialogTask from './dialog-task';
 import NotesHeading from './heading';
 import { styNotesPage } from './style';
 import TaskList from './task';
+import { TaskEventHandlerPayload } from './types';
+
+interface DialogToggleTypes {
+  mode?: 'create' | 'edit';
+  payload?: Partial<TodoTaskType>;
+}
 
 /**
  * Notes Page Container
@@ -23,12 +32,21 @@ const NotesPageContainer = () => {
   const [selectedTimestamp, setSelected] = useState(() =>
     getCurrentTimestamp()
   );
+  const [loading] = useState(true);
+
   const [ui, setUIConfig] = useState<UIConfigType>({
     selection: TodoStatusTaskEnum.All,
     template: 'grid'
   });
   const { selection, template } = ui;
+  const [{ mode, payload }, setToggleDialog] = useState<DialogToggleTypes>({});
 
+  /**
+   * On Set UI Config
+   *
+   * @param {Partial<UIConfigType>} args - ui config preset
+   * @returns {void}
+   */
   const onSetUIConfig = useCallback(
     (args: Partial<UIConfigType>) => {
       let response = { selection, template };
@@ -47,6 +65,74 @@ const NotesPageContainer = () => {
       }
     },
     [selection, template]
+  );
+
+  /**
+   * On Click Create Task
+   *
+   * @description this method will be invoked when user try to click "create task" on heading component
+   * @returns {void}
+   */
+  const onClickCreateTask = useCallback(() => {
+    setToggleDialog({
+      mode: 'create',
+      payload: {}
+    });
+  }, []);
+
+  /**
+   * On Close Dialog
+   *
+   * @description this method will be invoked when user try to close or click cancel on dialog task component
+   * @returns {void}
+   */
+  const onCloseDialog = useCallback(() => {
+    setToggleDialog({
+      mode: undefined,
+      payload: {}
+    });
+  }, []);
+
+  /**
+   * On Submit Dialog
+   *
+   * @param {TodoTaskType} args - form value from dialog task
+   * @description this method will be invoked when user try to submit / edit what we've done inputted from dialog task
+   * @returns {void}
+   */
+  const onSubmitTask = useCallback(
+    (args: TodoTaskType) => {
+      if (mode === 'create') {
+        console.debug('create', args);
+      } else {
+        console.debug('edit', args);
+      }
+      onCloseDialog();
+    },
+    [mode, onCloseDialog]
+  );
+
+  /**
+   * Event Handler Task List Component
+   *
+   * @param {TaskEventHandlerPayload} args - payload event handler will be invoked from task list component
+   * @returns {void}
+   */
+  const eventHandlerTaskLists = useCallback(
+    ({ payload, type }: TaskEventHandlerPayload) => {
+      switch (type) {
+        case 'edit':
+          setToggleDialog({
+            mode: 'edit',
+            payload
+          });
+          break;
+
+        default:
+          break;
+      }
+    },
+    []
   );
 
   const filterredTaskList = useMemo(() => {
@@ -119,28 +205,54 @@ const NotesPageContainer = () => {
     };
   }, []);
 
+  const isDayOff = useMemo(() => {
+    const selectedDate = new Date(selectedTimestamp);
+
+    if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) return true;
+
+    return false;
+  }, [selectedTimestamp]);
+
   return (
     <div className={styNotesPage}>
-      <section className="content">
-        <NotesHeading
-          selectedDate={selectedTimestamp}
-          selection={selection}
-          template={template}
-          setUIConfig={onSetUIConfig}
-        />
-        <section className="notes">
-          <NotesCategory {...progressTask} categories={categoryTask} />
-          <TaskList
-            on={console.debug}
-            selectedDate={selectedTimestamp}
+      <Head>
+        <title>Daily Task</title>
+      </Head>
+      {isDayOff ? (
+        <DayOffMessage />
+      ) : (
+        <section className="content">
+          <NotesHeading
+            selectedTimestamp={selectedTimestamp}
+            selection={selection}
             template={template}
-            tasks={filterredTaskList}
+            setUIConfig={onSetUIConfig}
+            onClickCreateTask={onClickCreateTask}
           />
+          <section className="notes">
+            <NotesCategory
+              {...progressTask}
+              categories={categoryTask}
+              loading={loading}
+            />
+            <TaskList
+              on={eventHandlerTaskLists}
+              template={template}
+              tasks={filterredTaskList}
+              loading={loading}
+            />
+          </section>
         </section>
-      </section>
+      )}
       <NotesCalendar
         selectedTimestamp={selectedTimestamp}
         setSelected={setSelected}
+      />
+      <DialogTask
+        {...payload}
+        onCloseDialog={onCloseDialog}
+        mode={mode}
+        onSubmit={onSubmitTask}
       />
     </div>
   );

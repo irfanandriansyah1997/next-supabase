@@ -8,9 +8,33 @@ import Text from '@/components/general/text';
 import DropdownTask from '@/components/notes/task/Dropdown';
 import type { SimplyTaskEventHandler } from '@/components/notes/types';
 import { CATEGORY_ICON, CATEGORY_LABEL } from '@/constant/category';
+import { styShimmer } from '@/styles/constant/animation';
 import { TodoStatusTaskEnum, TodoTaskType } from '@/types/notes';
+import { formattingTime } from '@/utils/general/date';
 
-import { styTaskCardItem } from './style';
+import { styTaskCardItem, styTaskCardItemLoader } from './style';
+
+/**
+ * Task Card Item Loader
+ *
+ * @author Irfan Andriansyah <irfan.andriansyah@tokopedia.com>
+ * @since 0.0.0
+ * @returns {JSX.Element} task card item loader html
+ */
+export const TaskCardItemLoader = () => (
+  <div className={styTaskCardItemLoader}>
+    <div className={cx(styShimmer, 'category')} />
+    <div className={'desc-task'}>
+      <div className={styShimmer} />
+      <div className={styShimmer} />
+    </div>
+
+    <div className={'footer'}>
+      <div className={styShimmer} />
+      <div className={styShimmer} />
+    </div>
+  </div>
+);
 
 interface TaskGridItemProps extends TodoTaskType, SimplyTaskEventHandler {
   enableEdit?: boolean;
@@ -102,6 +126,20 @@ const TaskCardItem = (props: TaskGridItemProps) => {
     }
   }, [status]);
 
+  const descTask = useMemo(() => {
+    let response = desc;
+
+    if (tags) {
+      response = `<b>[${tags}]</b> ${response}`;
+    }
+
+    return response;
+  }, [desc, tags]);
+
+  const rangeTime = useMemo(() => {
+    return `${formattingTime(start)} - ${formattingTime(end)}`;
+  }, [start, end]);
+
   return (
     <div className={styTaskCardItem(status)}>
       <div className="dropdown">
@@ -125,7 +163,6 @@ const TaskCardItem = (props: TaskGridItemProps) => {
           enableEdit={enableEdit}
         />
       </div>
-
       <div className="category">
         <Avatar
           shape="rectangle"
@@ -150,9 +187,10 @@ const TaskCardItem = (props: TaskGridItemProps) => {
         color="title"
         lineHeight="preset-7"
         className="desc-task"
-      >
-        {desc}
-      </Text>
+        dangerouslySetInnerHTML={{
+          __html: descTask
+        }}
+      />
       <section className="footer">
         <Text
           tag="span"
@@ -163,9 +201,7 @@ const TaskCardItem = (props: TaskGridItemProps) => {
         >
           {labelStatus}
         </Text>
-        <Badge className="badge">
-          {start} - {end}
-        </Badge>
+        <Badge className="badge">{rangeTime}</Badge>
       </section>
     </div>
   );

@@ -22,7 +22,9 @@ import { styDropdown, styDropdownContent } from './style';
  */
 export interface DropdownProps {
   disabled?: boolean;
+  ignoreEventHandler?: boolean;
   ltr?: boolean;
+  open?: boolean;
   toggle: ReactNode;
 }
 
@@ -35,9 +37,20 @@ export interface DropdownProps {
  * @returns {JSX.Element} dropdown html element
  */
 const Dropdown = (props: PropsWithChildren<DropdownProps>) => {
-  const { children, disabled, ltr = true, toggle } = props;
+  const {
+    children,
+    disabled,
+    ignoreEventHandler,
+    ltr = true,
+    open,
+    toggle
+  } = props;
   const [show, toggleShow] = useState(false);
   const ref = useRef<HTMLDivElement>();
+
+  useEffect(() => {
+    if (open !== undefined) toggleShow(open);
+  }, [open]);
 
   /**
    * On Click Toggle
@@ -49,11 +62,11 @@ const Dropdown = (props: PropsWithChildren<DropdownProps>) => {
     (e) => {
       e.preventDefault();
 
-      if (!disabled) {
+      if (!disabled && !ignoreEventHandler) {
         toggleShow(!show);
       }
     },
-    [disabled, show]
+    [disabled, ignoreEventHandler, show]
   );
 
   useEffect(() => {
@@ -64,7 +77,11 @@ const Dropdown = (props: PropsWithChildren<DropdownProps>) => {
      * @returns {void}
      */
     const handlerMouseEvent = (e: MouseEvent<HTMLElement>) => {
-      if (ref.current && !ref.current.contains(e.target as HTMLElement)) {
+      if (
+        ref.current &&
+        !ref.current.contains(e.target as HTMLElement) &&
+        !ignoreEventHandler
+      ) {
         toggleShow(false);
       }
     };
@@ -73,7 +90,7 @@ const Dropdown = (props: PropsWithChildren<DropdownProps>) => {
 
     return () =>
       document.removeEventListener('mousedown', handlerMouseEvent as any);
-  }, []);
+  }, [ignoreEventHandler]);
 
   return (
     <div className={styDropdown}>

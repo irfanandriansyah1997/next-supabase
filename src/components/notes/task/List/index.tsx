@@ -8,9 +8,28 @@ import Text from '@/components/general/text';
 import DropdownTask from '@/components/notes/task/Dropdown';
 import type { SimplyTaskEventHandler } from '@/components/notes/types';
 import { CATEGORY_ICON, CATEGORY_LABEL } from '@/constant/category';
+import { styShimmer } from '@/styles/constant/animation';
 import { TodoStatusTaskEnum, TodoTaskType } from '@/types/notes';
+import { formattingTime } from '@/utils/general/date';
 
-import { styCheckbox, styTaskListItem } from './style';
+import { styCheckbox, styTaskListItem, styTaskListItemLoader } from './style';
+
+/**
+ * Task List Item Loader
+ *
+ * @author Irfan Andriansyah <irfan.andriansyah@tokopedia.com>
+ * @returns {JSX.Element} task list item loader html
+ */
+export const TaskListItemLoader = () => {
+  return (
+    <div className={styTaskListItemLoader}>
+      <div className={cx(styShimmer, 'checkbox')} />
+      <div className={cx(styShimmer, 'category')} />
+      <div className={cx(styShimmer, 'desc-task')} />
+      <div className="badge" />
+    </div>
+  );
+};
 
 interface TaskListItemProps extends TodoTaskType, SimplyTaskEventHandler {
   enableEdit?: boolean;
@@ -115,6 +134,20 @@ const TaskListItem = (props: TaskListItemProps) => {
     }
   }, [on, payload, status]);
 
+  const descTask = useMemo(() => {
+    let response = desc;
+
+    if (tags) {
+      response = `<b>[${tags}]</b> ${response}`;
+    }
+
+    return response;
+  }, [desc, tags]);
+
+  const rangeTime = useMemo(() => {
+    return `${formattingTime(start)} - ${formattingTime(end)}`;
+  }, [start, end]);
+
   return (
     <div className={styTaskListItem(status)}>
       <div
@@ -147,14 +180,14 @@ const TaskListItem = (props: TaskListItemProps) => {
           fontSize={13}
           fontWeight={400}
           color="text"
+          className="desc-task"
           lineHeight="preset-6"
-        >
-          {desc}
-        </Text>
+          dangerouslySetInnerHTML={{
+            __html: descTask
+          }}
+        />
       </section>
-      <Badge className="badge">
-        {start} - {end}
-      </Badge>
+      <Badge className="badge">{rangeTime}</Badge>
       <DropdownTask
         handlerEditTask={onEditTask}
         handlerMarkAsDone={onMarkAsDone}

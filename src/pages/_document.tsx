@@ -53,6 +53,7 @@ class AppDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <div id="react-portal" />
         </body>
       </Html>
     );
