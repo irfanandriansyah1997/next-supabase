@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useCallback, useMemo, useState } from 'react';
 
 import { CATEGORY_LIST } from '@/constant/category';
@@ -8,7 +9,8 @@ import { getCurrentTimestamp } from '@/utils/general/date';
 
 import NotesCalendar from './calendar';
 import NotesCategory from './category';
-import DialogTask from './DialogTask';
+import DayOffMessage from './day-off';
+import DialogTask from './dialog-task';
 import NotesHeading from './heading';
 import { styNotesPage } from './style';
 import TaskList from './task';
@@ -30,6 +32,8 @@ const NotesPageContainer = () => {
   const [selectedTimestamp, setSelected] = useState(() =>
     getCurrentTimestamp()
   );
+  const [loading] = useState(true);
+
   const [ui, setUIConfig] = useState<UIConfigType>({
     selection: TodoStatusTaskEnum.All,
     template: 'grid'
@@ -201,26 +205,45 @@ const NotesPageContainer = () => {
     };
   }, []);
 
+  const isDayOff = useMemo(() => {
+    const selectedDate = new Date(selectedTimestamp);
+
+    if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) return true;
+
+    return false;
+  }, [selectedTimestamp]);
+
   return (
     <div className={styNotesPage}>
-      <section className="content">
-        <NotesHeading
-          selectedDate={selectedTimestamp}
-          selection={selection}
-          template={template}
-          setUIConfig={onSetUIConfig}
-          onClickCreateTask={onClickCreateTask}
-        />
-        <section className="notes">
-          <NotesCategory {...progressTask} categories={categoryTask} />
-          <TaskList
-            on={eventHandlerTaskLists}
-            selectedDate={selectedTimestamp}
+      <Head>
+        <title>Daily Task</title>
+      </Head>
+      {isDayOff ? (
+        <DayOffMessage />
+      ) : (
+        <section className="content">
+          <NotesHeading
+            selectedTimestamp={selectedTimestamp}
+            selection={selection}
             template={template}
-            tasks={filterredTaskList}
+            setUIConfig={onSetUIConfig}
+            onClickCreateTask={onClickCreateTask}
           />
+          <section className="notes">
+            <NotesCategory
+              {...progressTask}
+              categories={categoryTask}
+              loading={loading}
+            />
+            <TaskList
+              on={eventHandlerTaskLists}
+              template={template}
+              tasks={filterredTaskList}
+              loading={loading}
+            />
+          </section>
         </section>
-      </section>
+      )}
       <NotesCalendar
         selectedTimestamp={selectedTimestamp}
         setSelected={setSelected}

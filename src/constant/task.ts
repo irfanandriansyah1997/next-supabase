@@ -2,6 +2,8 @@ import type { TodoTaskType } from '@/types/notes';
 import { TodoCategoryEnum, TodoStatusTaskEnum } from '@/types/notes';
 import { sortTaskBasedOnTimes } from '@/utils/general/task';
 
+export const TASK_LOADER_ITEM = new Array(2).fill(null);
+
 export let TASK_LIST: TodoTaskType[] = [
   {
     desc: 'Fix feedback pr review',

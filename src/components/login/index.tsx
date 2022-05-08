@@ -1,4 +1,5 @@
 import { useUser } from '@supabase/supabase-auth-helpers/react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -29,6 +30,9 @@ const LoginPageContainer = () => {
   if (!user)
     return (
       <>
+        <Head>
+          <title>Sign In</title>
+        </Head>
         {error && <p>{error.message}</p>}
         <LoginForm />
       </>

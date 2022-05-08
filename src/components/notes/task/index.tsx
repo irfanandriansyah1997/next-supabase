@@ -1,12 +1,12 @@
-import { memo, useMemo, useRef } from 'react';
+import { memo } from 'react';
 import Masonry from 'react-masonry-css';
 
 import { SimplyTaskEventHandler } from '@/components/notes/types';
+import { TASK_LOADER_ITEM } from '@/constant/task';
 import type { TaskLayout, TodoTaskType } from '@/types/notes';
-import { getCurrentTimestamp } from '@/utils/general/date';
 
-import TaskCardItem from './Card';
-import TaskListItem from './List';
+import TaskCardItem, { TaskCardItemLoader } from './Card';
+import TaskListItem, { TaskListItemLoader } from './List';
 import { styTaskGrid, styTaskList } from './style';
 
 /**
@@ -15,7 +15,7 @@ import { styTaskGrid, styTaskList } from './style';
  * @since 0.0.0
  */
 interface TaskListProps extends SimplyTaskEventHandler {
-  selectedDate: number;
+  loading?: boolean;
   tasks: TodoTaskType[];
   template: TaskLayout;
 }
@@ -29,37 +29,40 @@ interface TaskListProps extends SimplyTaskEventHandler {
  * @returns {JSX.Element} task list html element
  */
 const TaskList = (props: TaskListProps) => {
-  const { on, selectedDate, tasks, template } = props;
-  const currentDate = useRef(getCurrentTimestamp());
-
-  const isEnableEdit = useMemo(() => {
-    return selectedDate >= currentDate.current;
-  }, [selectedDate]);
+  const { loading, on, tasks, template } = props;
 
   return (
     <>
       {template === 'list' && (
         <div className={styTaskList}>
-          {tasks.map((item, index) => (
-            <TaskListItem
-              key={`${item.desc}-${item.type}-${index}-card`}
-              {...item}
-              on={on}
-              enableEdit={isEnableEdit}
-            />
-          ))}
+          {loading &&
+            TASK_LOADER_ITEM.map((_, index) => (
+              <TaskListItemLoader key={`loader-list-${index}`} />
+            ))}
+          {!loading &&
+            tasks.map((item, index) => (
+              <TaskListItem
+                key={`${item.desc}-${item.type}-${index}-card`}
+                {...item}
+                on={on}
+              />
+            ))}
         </div>
       )}
       {template === 'grid' && (
         <Masonry breakpointCols={2} className={styTaskGrid}>
-          {tasks.map((item, index) => (
-            <TaskCardItem
-              key={`${item.desc}-${item.type}-${index}-grid`}
-              {...item}
-              on={on}
-              enableEdit={isEnableEdit}
-            />
-          ))}
+          {loading &&
+            TASK_LOADER_ITEM.map((_, index) => (
+              <TaskCardItemLoader key={`loader-card-${index}`} />
+            ))}
+          {!loading &&
+            tasks.map((item, index) => (
+              <TaskCardItem
+                key={`${item.desc}-${item.type}-${index}-grid`}
+                {...item}
+                on={on}
+              />
+            ))}
         </Masonry>
       )}
     </>

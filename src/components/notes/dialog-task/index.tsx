@@ -5,7 +5,7 @@ import { object, string } from 'yup';
 
 import Text from '@/components/general/text';
 import Textfield from '@/components/general/textfield';
-import TimePicker from '@/components/general/TimePicker';
+import TimePicker from '@/components/general/time-picker';
 import { withReactPortal } from '@/hoc/portal';
 import { fadeAnimaton } from '@/styles/constant/animation';
 import {
@@ -15,7 +15,7 @@ import {
 } from '@/types/notes';
 
 import { styDialogTask, styDialogTaskBackdrop } from './style';
-import StatusDropdown from './TypeTaskDropdown';
+import StatusDropdown from './type-task-dropdown';
 
 /**
  * Dialog Task Props Interface

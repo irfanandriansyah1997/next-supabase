@@ -90,3 +90,33 @@ export const styNotesCategoryContent = css`
     }
   }
 `;
+
+export const styNotesCategoryLoader = css`
+  padding: ${SPACING_LEVEL_5};
+  flex: 0 0 calc(50% - 16px);
+  background: ${COLOR_PALLETE.white};
+  border-radius: 8px;
+  margin: ${SPACING_LEVEL_3};
+  box-shadow: ${BOX_SHADOW_4dp};
+  height: 127px;
+
+  .icon {
+    border-radius: 5px;
+    height: 32px;
+    width: 32px;
+  }
+
+  > .title {
+    margin-top: ${SPACING_LEVEL_4};
+    margin-bottom: ${SPACING_LEVEL_3};
+    width: 60%;
+    height: 16px;
+  }
+
+  > .text {
+    margin-top: ${SPACING_LEVEL_3};
+    margin-bottom: ${SPACING_LEVEL_4};
+    width: 75%;
+    height: 11px;
+  }
+`;

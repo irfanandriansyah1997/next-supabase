@@ -184,3 +184,39 @@ export const styCheckbox = (status: TodoStatusTaskEnum | undefined) => {
     }
   `;
 };
+
+export const styTaskListItemLoader = css`
+  display: flex;
+  align-items: center;
+  margin: ${SPACING_LEVEL_5} 0;
+  justify-content: space-between;
+  position: relative;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .checkbox {
+    position: relative;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    margin-right: ${SPACING_LEVEL_4};
+  }
+
+  .category {
+    width: 150px;
+    height: 24px;
+  }
+
+  .desc-task {
+    width: 225px;
+    height: 24px;
+    flex: 1;
+    margin: 10px;
+  }
+`;

@@ -8,10 +8,33 @@ import Text from '@/components/general/text';
 import DropdownTask from '@/components/notes/task/Dropdown';
 import type { SimplyTaskEventHandler } from '@/components/notes/types';
 import { CATEGORY_ICON, CATEGORY_LABEL } from '@/constant/category';
+import { styShimmer } from '@/styles/constant/animation';
 import { TodoStatusTaskEnum, TodoTaskType } from '@/types/notes';
 import { formattingTime } from '@/utils/general/date';
 
-import { styTaskCardItem } from './style';
+import { styTaskCardItem, styTaskCardItemLoader } from './style';
+
+/**
+ * Task Card Item Loader
+ *
+ * @author Irfan Andriansyah <irfan.andriansyah@tokopedia.com>
+ * @since 0.0.0
+ * @returns {JSX.Element} task card item loader html
+ */
+export const TaskCardItemLoader = () => (
+  <div className={styTaskCardItemLoader}>
+    <div className={cx(styShimmer, 'category')} />
+    <div className={'desc-task'}>
+      <div className={styShimmer} />
+      <div className={styShimmer} />
+    </div>
+
+    <div className={'footer'}>
+      <div className={styShimmer} />
+      <div className={styShimmer} />
+    </div>
+  </div>
+);
 
 interface TaskGridItemProps extends TodoTaskType, SimplyTaskEventHandler {
   enableEdit?: boolean;

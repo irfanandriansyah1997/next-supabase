@@ -80,3 +80,61 @@ export const styTaskCardItem = (status: TodoStatusTaskEnum | undefined) => css`
     }
   }
 `;
+
+export const styTaskCardItemLoader = css`
+  padding: ${SPACING_LEVEL_4};
+  background-color: ${COLOR_PALLETE.white};
+  box-shadow: ${BOX_SHADOW_4dp};
+  transition: all ${EASE_IN_OUT} 0.3s;
+  border-radius: 8px;
+  position: relative;
+
+  .category {
+    display: flex;
+    width: 35%;
+    border-radius: 5px;
+    align-items: center;
+    margin: ${pxToRem(6)} 0 calc(${SPACING_LEVEL_5} + ${pxToRem(6)});
+    height: 12px;
+  }
+
+  .desc-task {
+    height: 52px;
+    width: 100%;
+
+    > div {
+      height: 12px;
+      margin-bottom: ${pxToRem(6)};
+
+      &:first-child {
+        width: 100%;
+      }
+
+      &:last-child {
+        width: 40%;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 32px;
+    margin-top: ${SPACING_LEVEL_5};
+
+    > div {
+      border-radius: 5px;
+
+      &:first-child {
+        width: 30%;
+        height: 24px;
+      }
+
+      &:last-child {
+        width: 30%;
+        height: 32px;
+      }
+    }
+  }
+`;

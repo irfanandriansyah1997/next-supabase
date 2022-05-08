@@ -1,11 +1,10 @@
 import { cx } from '@emotion/css';
-import { memo, useCallback, useRef } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
 import Icon from '@/components/general/icon';
 import Text from '@/components/general/text';
 import { MEDIUM_FONT_SIZE } from '@/styles/constant/typography';
 import { TodoStatusTaskEnum, UIConfigType } from '@/types/notes';
-import { getCurrentTimestamp } from '@/utils/general/date';
 
 import { styNotesHeading, styNotesNavigation } from './style';
 
@@ -64,7 +63,7 @@ let NotesNavigation = (props: NotesNavigationProps) => {
 
 interface NotesHeadingProps extends UIConfigType {
   onClickCreateTask(): void;
-  selectedDate: number;
+  selectedTimestamp: number;
   setUIConfig(param: Partial<UIConfigType>): void;
 }
 
@@ -77,9 +76,13 @@ interface NotesHeadingProps extends UIConfigType {
  * @returns {JSX.Element} notes heading html
  */
 const NotesHeading = (props: NotesHeadingProps) => {
-  const { onClickCreateTask, selectedDate, selection, setUIConfig, template } =
-    props;
-  const currentDate = useRef(getCurrentTimestamp());
+  const {
+    onClickCreateTask,
+    selectedTimestamp,
+    selection,
+    setUIConfig,
+    template
+  } = props;
 
   /**
    * on Select Section
@@ -104,6 +107,14 @@ const NotesHeading = (props: NotesHeadingProps) => {
     [setUIConfig]
   );
 
+  const enableCreateTask = useMemo(() => {
+    const selectedDate = new Date(selectedTimestamp);
+
+    if (selectedDate.getDay() !== 0 && selectedDate.getDay() !== 6) return true;
+
+    return false;
+  }, [selectedTimestamp]);
+
   return (
     <>
       <section className={styNotesHeading}>
@@ -117,7 +128,7 @@ const NotesHeading = (props: NotesHeadingProps) => {
           Todo List 📌
         </Text>
         <section>
-          {selectedDate >= currentDate.current && (
+          {enableCreateTask && (
             <Text
               tag="p"
               fontSize="text"

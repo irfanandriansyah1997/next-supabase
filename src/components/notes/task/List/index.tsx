@@ -8,10 +8,28 @@ import Text from '@/components/general/text';
 import DropdownTask from '@/components/notes/task/Dropdown';
 import type { SimplyTaskEventHandler } from '@/components/notes/types';
 import { CATEGORY_ICON, CATEGORY_LABEL } from '@/constant/category';
+import { styShimmer } from '@/styles/constant/animation';
 import { TodoStatusTaskEnum, TodoTaskType } from '@/types/notes';
 import { formattingTime } from '@/utils/general/date';
 
-import { styCheckbox, styTaskListItem } from './style';
+import { styCheckbox, styTaskListItem, styTaskListItemLoader } from './style';
+
+/**
+ * Task List Item Loader
+ *
+ * @author Irfan Andriansyah <irfan.andriansyah@tokopedia.com>
+ * @returns {JSX.Element} task list item loader html
+ */
+export const TaskListItemLoader = () => {
+  return (
+    <div className={styTaskListItemLoader}>
+      <div className={cx(styShimmer, 'checkbox')} />
+      <div className={cx(styShimmer, 'category')} />
+      <div className={cx(styShimmer, 'desc-task')} />
+      <div className="badge" />
+    </div>
+  );
+};
 
 interface TaskListItemProps extends TodoTaskType, SimplyTaskEventHandler {
   enableEdit?: boolean;
