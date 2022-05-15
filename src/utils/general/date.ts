@@ -217,3 +217,17 @@ export const getWeeksInMonth = (
       };
     });
 };
+
+/**
+ * Is Day Off
+ *
+ * @param {Date} date - selected date
+ * @author Irfan Andriansyah <irfan.andriansyah@tokopedia.com>
+ * @description check wheter selected day is day off
+ * @returns {boolean} is day off validator
+ */
+export const isDayOff = (date: Date): boolean => {
+  if (date.getDay() === 0 || date.getDay() === 6) return true;
+
+  return false;
+};

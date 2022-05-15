@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
+import Image from 'next/image';
+
 import DayOff from '@/asset/images/day-off.jpeg';
 import Text from '@/components/general/text';
 
@@ -13,7 +15,7 @@ import { styDayOffMessage } from './style';
  */
 const DayOffMessage = () => (
   <div className={styDayOffMessage}>
-    <img src={DayOff.src} alt="" style={{ width: 600 }} />
+    <Image src={DayOff.src} alt="" layout="fixed" width={600} height={446} />
     <Text
       tag="p"
       fontSize="large"

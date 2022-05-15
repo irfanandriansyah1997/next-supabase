@@ -7,6 +7,9 @@ export const styBreadcrumb = css`
   display: flex;
 
   .breadcrumb-icon {
+    width: 14px;
+    height: 14px;
+    display: block;
     margin: 0 ${SPACING_LEVEL_4};
   }
 `;

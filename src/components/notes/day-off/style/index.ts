@@ -20,9 +20,13 @@ export const styDayOffMessage = css`
 
   > p {
     margin-bottom: ${SPACING_LEVEL_3};
+    height: 46px;
+    width: 100%;
+    text-align: center;
   }
 
   > span {
     width: 60%;
+    height: 68px;
   }
 `;

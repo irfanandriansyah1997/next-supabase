@@ -14,6 +14,7 @@ import { styNotesCalendar } from './style';
  * @since 0.0.0
  */
 interface NotesCalendarProps {
+  loading: boolean;
   selectedTimestamp: number;
   setSelected(timestamp: number): void;
 }
@@ -27,13 +28,13 @@ interface NotesCalendarProps {
  * @returns {JSX.Element} notes calendar html
  */
 const NotesCalendar = (props: NotesCalendarProps) => {
-  const { selectedTimestamp, setSelected } = props;
+  const { loading, selectedTimestamp, setSelected } = props;
   const [listOfWorkDate] = useState<WorksDayTypes[]>(() =>
     getWorksDayOfWeeks()
   );
 
   return (
-    <div className={styNotesCalendar}>
+    <div className={styNotesCalendar(loading)}>
       <Text
         className="heading"
         tag="h1"
@@ -44,20 +45,22 @@ const NotesCalendar = (props: NotesCalendarProps) => {
       >
         Calendar
       </Text>
-      {listOfWorkDate.map(
-        ({ dateText, dayText, isToday, monthText, timestamp }) => (
-          <NotesCalendarItem
-            key={timestamp}
-            date={dateText}
-            month={monthText}
-            day={dayText}
-            isToday={isToday}
-            isActive={timestamp === selectedTimestamp}
-            timestamp={timestamp}
-            onClick={setSelected}
-          />
-        )
-      )}
+      <div>
+        {listOfWorkDate.map(
+          ({ dateText, dayText, isToday, monthText, timestamp }) => (
+            <NotesCalendarItem
+              key={timestamp}
+              date={dateText}
+              month={monthText}
+              day={dayText}
+              isToday={isToday}
+              isActive={timestamp === selectedTimestamp}
+              timestamp={timestamp}
+              onClick={setSelected}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 };

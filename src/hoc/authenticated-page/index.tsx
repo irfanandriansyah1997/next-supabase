@@ -1,8 +1,10 @@
 import type { User } from '@supabase/supabase-js';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 
 import Header from '@/components/general/header';
 import Sidebar from '@/components/general/sidebar';
+import UserContext from '@/context/user';
+import { UserTypes } from '@/types/user';
 import { normalizeUser } from '@/utils/supabase/auth';
 
 import { styApps } from './style';
@@ -22,16 +24,21 @@ interface WrappedComponentProps {
 const withAuthenticatedPageWrapper = (Component: FC) => {
   const WrappedComponent = (props: WrappedComponentProps) => {
     const { user } = props;
-    const { avatar, name } = normalizeUser(user);
+
+    const contextValue: UserTypes = useMemo(() => {
+      return normalizeUser(user);
+    }, [user]);
 
     return (
-      <div className={styApps}>
-        <Sidebar />
-        <div className="apps-content">
-          <Header avatar={avatar} name={name} />
-          <Component {...(props as any)} />
+      <UserContext.Provider value={contextValue}>
+        <div className={styApps}>
+          <Sidebar />
+          <div className="apps-content">
+            <Header avatar={contextValue.avatar} name={contextValue.name} />
+            <Component {...(props as any)} />
+          </div>
         </div>
-      </div>
+      </UserContext.Provider>
     );
   };
 
