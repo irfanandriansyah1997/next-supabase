@@ -1,6 +1,6 @@
 import type { User } from '@supabase/supabase-js';
 
-import { UserTypes } from '@/types/user';
+import type { UserTypes } from '@/types/user';
 
 /**
  * Normalize User
@@ -12,11 +12,13 @@ import { UserTypes } from '@/types/user';
  */
 export const normalizeUser = (user: User): UserTypes => {
   const {
+    id,
     user_metadata: { avatar_url: avatarUrl, name }
   } = user;
 
   return {
     avatar: avatarUrl,
-    name
+    name,
+    userId: id
   };
 };

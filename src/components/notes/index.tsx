@@ -1,20 +1,21 @@
+import loadable from '@loadable/component';
 import Head from 'next/head';
 import { useCallback, useMemo, useState } from 'react';
 
 import { CATEGORY_LIST } from '@/constant/category';
-import { TASK_LIST } from '@/constant/task';
 import { TodoCategoryEnum, TodoTaskType, UIConfigType } from '@/types/notes';
 import { TodoStatusTaskEnum } from '@/types/notes';
-import { getCurrentTimestamp } from '@/utils/general/date';
 
+import { useNotesTask } from './hooks/useNotesTask';
 import NotesCalendar from './calendar';
-import NotesCategory from './category';
 import DayOffMessage from './day-off';
 import DialogTask from './dialog-task';
-import NotesHeading from './heading';
 import { styNotesPage } from './style';
-import TaskList from './task';
 import { TaskEventHandlerPayload } from './types';
+
+const NotesCategory = loadable(() => import('./category'));
+const TaskList = loadable(() => import('./task'));
+const NotesHeading = loadable(() => import('./heading'));
 
 interface DialogToggleTypes {
   mode?: 'create' | 'edit';
@@ -29,11 +30,10 @@ interface DialogToggleTypes {
  * @returns {JSX.Element} notes page container html
  */
 const NotesPageContainer = () => {
-  const [selectedTimestamp, setSelected] = useState(() =>
-    getCurrentTimestamp()
-  );
-  const [loading] = useState(true);
-
+  const {
+    action: { onCreateTask, onEditStatusTask, onEditTask, setSelectedDate },
+    state: { isDayOff, loading, selectedTimestamp, task }
+  } = useNotesTask();
   const [ui, setUIConfig] = useState<UIConfigType>({
     selection: TodoStatusTaskEnum.All,
     template: 'grid'
@@ -103,13 +103,13 @@ const NotesPageContainer = () => {
   const onSubmitTask = useCallback(
     (args: TodoTaskType) => {
       if (mode === 'create') {
-        console.debug('create', args);
+        onCreateTask(args);
       } else {
-        console.debug('edit', args);
+        onEditTask(args);
       }
       onCloseDialog();
     },
-    [mode, onCloseDialog]
+    [mode, onCloseDialog, onCreateTask, onEditTask]
   );
 
   /**
@@ -128,27 +128,41 @@ const NotesPageContainer = () => {
           });
           break;
 
+        case 'mark-as-done': {
+          if (payload.id !== undefined)
+            onEditStatusTask(TodoStatusTaskEnum.Done, payload.id);
+          break;
+        }
+
+        case 'mark-as-in-progress': {
+          if (payload.id !== undefined)
+            onEditStatusTask(TodoStatusTaskEnum.InProgress, payload.id);
+          break;
+        }
+
+        case 'move-to-wont-do': {
+          if (payload.id !== undefined)
+            onEditStatusTask(TodoStatusTaskEnum.WontDo, payload.id);
+          break;
+        }
+
         default:
           break;
       }
     },
-    []
+    [onEditStatusTask]
   );
 
   const filterredTaskList = useMemo(() => {
     switch (selection) {
       case TodoStatusTaskEnum.Done:
-        return TASK_LIST.filter(
-          (item) => item.status === TodoStatusTaskEnum.Done
-        );
+        return task.filter((item) => item.status === TodoStatusTaskEnum.Done);
 
       case TodoStatusTaskEnum.WontDo:
-        return TASK_LIST.filter(
-          (item) => item.status === TodoStatusTaskEnum.WontDo
-        );
+        return task.filter((item) => item.status === TodoStatusTaskEnum.WontDo);
 
       case TodoStatusTaskEnum.InProgress:
-        return TASK_LIST.filter(
+        return task.filter(
           (item) =>
             item.status === TodoStatusTaskEnum.InProgress ||
             item.status === undefined
@@ -156,12 +170,12 @@ const NotesPageContainer = () => {
 
       case TodoStatusTaskEnum.All:
       default:
-        return TASK_LIST;
+        return task;
     }
-  }, [selection]);
+  }, [selection, task]);
 
   const categoryTask = useMemo(() => {
-    const countedTaskByCategory = TASK_LIST.reduce(
+    const countedTaskByCategory = task.reduce(
       (prev, { type }) => {
         switch (type) {
           case TodoCategoryEnum.Bugs:
@@ -191,27 +205,19 @@ const NotesPageContainer = () => {
       ...item,
       count: countedTaskByCategory[item.type]
     }));
-  }, []);
+  }, [task]);
 
   const progressTask = useMemo(() => {
-    const isDoneTaskLists = TASK_LIST.filter(
+    const isDoneTaskLists = task.filter(
       (item) => item.status === TodoStatusTaskEnum.Done
     );
 
     return {
       doneTaskCount: isDoneTaskLists.length,
-      progressText: `${isDoneTaskLists.length}/${TASK_LIST.length}`,
-      taskCount: TASK_LIST.length
+      progressText: `${isDoneTaskLists.length}/${task.length}`,
+      taskCount: task.length
     };
-  }, []);
-
-  const isDayOff = useMemo(() => {
-    const selectedDate = new Date(selectedTimestamp);
-
-    if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) return true;
-
-    return false;
-  }, [selectedTimestamp]);
+  }, [task]);
 
   return (
     <div className={styNotesPage}>
@@ -246,7 +252,8 @@ const NotesPageContainer = () => {
       )}
       <NotesCalendar
         selectedTimestamp={selectedTimestamp}
-        setSelected={setSelected}
+        setSelected={setSelectedDate}
+        loading={loading}
       />
       <DialogTask
         {...payload}

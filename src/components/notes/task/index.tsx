@@ -5,6 +5,7 @@ import { SimplyTaskEventHandler } from '@/components/notes/types';
 import { TASK_LOADER_ITEM } from '@/constant/task';
 import type { TaskLayout, TodoTaskType } from '@/types/notes';
 
+import EmptyState from '../empty-state';
 import TaskCardItem, { TaskCardItemLoader } from './Card';
 import TaskListItem, { TaskListItemLoader } from './List';
 import { styTaskGrid, styTaskList } from './style';
@@ -31,6 +32,10 @@ interface TaskListProps extends SimplyTaskEventHandler {
 const TaskList = (props: TaskListProps) => {
   const { loading, on, tasks, template } = props;
 
+  if (tasks.length === 0 && loading === false) {
+    return <EmptyState />;
+  }
+
   return (
     <>
       {template === 'list' && (
@@ -45,6 +50,7 @@ const TaskList = (props: TaskListProps) => {
                 key={`${item.desc}-${item.type}-${index}-card`}
                 {...item}
                 on={on}
+                enableEdit
               />
             ))}
         </div>
@@ -61,6 +67,7 @@ const TaskList = (props: TaskListProps) => {
                 key={`${item.desc}-${item.type}-${index}-grid`}
                 {...item}
                 on={on}
+                enableEdit
               />
             ))}
         </Masonry>

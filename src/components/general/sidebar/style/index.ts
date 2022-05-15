@@ -43,6 +43,12 @@ export const stySidebarLogo = css`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+
+  > span {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
 `;
 
 export const stySidebarItem = css`

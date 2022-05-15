@@ -7,4 +7,5 @@
 export interface UserTypes {
   avatar: string;
   name: string;
+  userId: string;
 }

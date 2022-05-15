@@ -8,11 +8,12 @@ import {
   SPACING_LEVEL_5,
   SPACING_LEVEL_7
 } from '@/styles/constant/spacing';
+import { EASE_IN_OUT } from '@/styles/constant/transition';
 import { CAPTION_FONT_SIZE, LINE_HEIGHT_2 } from '@/styles/constant/typography';
 import { hexToRgba } from '@/utils/general/color';
 import { pxToRem } from '@/utils/general/style';
 
-export const styNotesCalendar = css`
+export const styNotesCalendar = (loading: boolean) => css`
   position: absolute;
   top: 0;
   right: 0;
@@ -29,10 +30,17 @@ export const styNotesCalendar = css`
   .heading {
     padding: 0 ${SPACING_LEVEL_5};
   }
+
+  > div,
+  > h1 {
+    opacity: ${loading ? 0.5 : 1};
+    transition: all ${EASE_IN_OUT} 0.3s;
+  }
 `;
 
 export const styNotesCalendarItem = (isActive = false) => css`
   width: 100%;
+  height: 93px;
   cursor: pointer;
   display: flex;
   align-items: center;
